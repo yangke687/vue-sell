@@ -24,22 +24,22 @@ var apiRouter = express.Router();
 
 apiRouter.get('/seller', function(req, res) {
   res.json({
-    errorno: 0,
-    seller: seller
+    errno: 0,
+    data: seller
   });
 });
 
 apiRouter.get('/goods', function(req, res) {
   res.json({
-    errorno: 0,
-    goods: goods
+    errno: 0,
+    data: goods
   });
 });
 
 apiRouter.get('/ratings', function(req, res) {
   res.json({
-    errorno: 0,
-    ratings: ratings,
+    errno: 0,
+    data: ratings,
   });
 });
 

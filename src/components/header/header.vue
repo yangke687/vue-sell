@@ -41,10 +41,21 @@
 						<div class="text">优惠信息</div>
 						<div class="line"></div>
 					</div>
+					<!-- list -->
+					<ul class="supports">
+						<li class="support-item" v-for="item in seller.supports">
+							<span class="icon" :class="classMap[item.type]"></span>
+							<span class="text">{{ item.description }}</span>
+						</li>
+					</ul>
 					<div class="title">
 						<div class="line"></div>
 						<div class="text">商家公告</div>
 						<div class="line"></div>
+					</div>
+					<!-- bulletin -->
+					<div class="bulletin">
+						<p class="content">{{ seller.bulletin }}</p>
 					</div>
 				</div>
 			</div>
@@ -223,7 +234,7 @@
 					.title
 						display: flex
 						width: 80%
-						margin: 30px auto 24px auto
+						margin: 28px auto 24px auto
 						.line
 							flex: 1
 							position: relative
@@ -233,6 +244,44 @@
 							padding: 0px 12px
 							font-size: 14px
 							font-weight: 700
+					.supports 
+						width: 80%
+						margin: 0 auto
+						.support-item
+							padding: 0 12px 
+							margin-bottom: 12px
+							font-size: 0 
+							&:last-child
+								margin-bottom: 0
+							.icon
+								display: inline-block
+								margin-right: 16px
+								width: 16px
+								height: 16px
+								background-repeat: no-repeat
+								background-size: 16px 16px
+								vertical-align: top
+								&.decrease
+									bg-image('decrease_2')
+								&.discount
+									bg-image('discount_2')
+								&.guarantee
+									bg-image('guarantee_2')
+								&.invoice
+									bg-image('invoice_2')
+								&.special
+									bg-image('special_2')
+							.text
+								font-size: 12px
+								line-height: 16px
+					.bulletin
+						width: 80%
+						margin: 0 auto
+						.content
+							font-size: 12px
+							line-height: 24px
+							padding: 0 12px
+
 			.detail-close
 				position: relative
 				width: 32px

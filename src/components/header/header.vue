@@ -23,7 +23,11 @@
 			</div>
 		</div>
 		<div class="bulletin-wrapper">
-			
+			<span class="bulletin-title"></span><span class="bulletin-text">{{ seller.bulletin }}</span>
+			<span class="icon-keyboard_arrow_right"></span>
+		</div>
+		<div class="background">
+			<img :src="seller.avatar" width="100%" height="100%" alt="">
 		</div>
 	</div>
 </template>
@@ -43,7 +47,9 @@
 	@import "../../common/stylus/mixin.styl";
 	.header
 		color: #FFF
-		background: #999
+		overflow: hidden
+		position: relative
+		background: rgba(7,17,27,0.5);
 		.content-wrapper
 			position: relative
 			padding: 24px 12px 18px 24px
@@ -116,5 +122,40 @@
 					line-height: 24px
 					margin-left: 2px
 					vertical-align: top
-
+		.bulletin-wrapper
+			height: 28px
+			line-height: 28px
+			padding-left: 12px
+			padding-right:22px
+			white-space: nowrap
+			overflow: hidden
+			text-overflow: ellipsis
+			position: relative
+			background: rgba(7,17,27,.2)
+			.bulletin-title
+				display: inline-block;
+				margin-top: 7px
+				width: 22px
+				height: 12px
+				bg-image('bulletin')
+				background-size: 22px 12px
+				background-repeat: no-repeat
+				vertical-align: top
+			.bulletin-text
+				margin: 0px 4px
+				font-size: 10px
+				vertical-align: top
+			.icon-keyboard_arrow_right
+				position: absolute
+				font-size: 10px
+				right: 12px
+				top: 8px
+		.background
+			position: absolute
+			top: 0
+			left: 0
+			width: 100%
+			height: 100%
+			z-index: -1
+			filter: blur(10px)
 </style>

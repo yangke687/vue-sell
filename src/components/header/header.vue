@@ -29,7 +29,7 @@
 		<div class="background">
 			<img :src="seller.avatar" width="100%" height="100%" alt="">
 		</div>
-		<div v-show="detailShow" class="detail">
+		<div v-show="detailShow" class="detail" transition="fade">
 			<div class="detail-wrapper clearfix">
 				<div class="detail-main">
 					<h1 class="name">{{ seller.name }}</h1>
@@ -60,7 +60,7 @@
 				</div>
 			</div>
 			<div class="detail-close">
-				<span class="icon-close"></span>
+				<span class="icon-close" @click="hideDetail"></span>
 			</div>
 		</div>
 	</div>
@@ -76,12 +76,15 @@
 		},
 		data(){
 			return {
-				detailShow: true
+				detailShow: false
 			};
 		},
 		methods: {
 			showDetail(){
 				this.detailShow = true;
+			},
+			hideDetail(){
+				this.detailShow = false;
 			}
 		},
 		created(){
@@ -215,7 +218,13 @@
 			width: 100%
 			height: 100%
 			overflow: auto
-			background: rgba(7,17,27,.8)
+			transition: background,opacity 0.5s
+			&.fade-transition
+				opacity: 1
+				background: rgba(7,17,27,.8)
+			&.fade-enter,&.fade-leave
+				opacity: 0
+				background: rgba(7,17,27,0.8)
 			.detail-wrapper
 				width: 100%
 				min-height: 100%

@@ -73,7 +73,6 @@
           let h1 = this.heightList[i];
           let h2 = this.heightList[i + 1];
           if (!h2 || (this.scrollY >= h1 && this.scrollY < h2)) {
-            console.log('current idx:', i);
             return i;
           }
         }
@@ -82,7 +81,6 @@
     },
     methods: {
       _initScroll(){
-        console.log('init scroll');
         this.menuScroll = new BScroll(this.$els.menuWrapper, {});
         this.foodsScroll = new BScroll(this.$els.foodsWrapper, {
           probeType: 3

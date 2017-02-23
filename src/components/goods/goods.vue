@@ -1,6 +1,6 @@
 <template>
 <div class="goods">
-	<div class="menu-wrapper">
+	<div class="menu-wrapper" v-el:menu-wrapper>
 		<ul>
 			<li v-for="item in goods" class="menu-item">
 				<span class="text border-1px" >
@@ -9,7 +9,7 @@
 			</li>
 		</ul>
 	</div>
-	<div class="foods-wrapper">
+	<div class="foods-wrapper" v-el:foods-wrapper>
 		<ul>
 			<li v-for="item in goods" class="food-list">
 				<h1 class="title">{{item.name}}</h1>
@@ -22,12 +22,10 @@
 							<h2 class="name">{{ food.name }}</h2>
 							<p class="desc">{{ food.description }}</p>
 							<div class="extra">
-								<span class="count">月售{{food.sellCount}}份</span>
-								<span>好评率{{food.rating}}%</span>
+								<span class="count">月售{{food.sellCount}}份</span><span>好评率{{food.rating}}%</span>
 							</div>
 							<div class="price">
-								<span class="now">¥{{food.price}}</span>
-								<span class="old" v-show="food.oldPrice">¥{{food.oldPrice}}</span>
+								<span class="now">¥{{food.price}}</span><span class="old" v-show="food.oldPrice">¥{{food.oldPrice}}</span>
 							</div>
 						</div>
 					</li>
@@ -38,6 +36,8 @@
 </div>
 </template>
 <script type="text/ecmascript-6">
+	import BScroll from 'better-scroll';
+
 	const ERR_OK = 0;
 
 	export default {
@@ -51,7 +51,9 @@
 				res = res.body;
 				if (res.errno === ERR_OK){
 					this.goods = res.data;
-					console.log(this.goods);
+					this.$nextTick(function(){
+						this._initScroll();
+					});
 				}
 			});
 			this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee'];
@@ -60,6 +62,13 @@
 			return {
 				goods: []
 			};
+		},
+		methods: {
+			_initScroll(){
+				console.log('init scroll');
+				this.menuScroll = new BScroll(this.$els.menuWrapper, {});
+				this.foodsScroll = new BScroll(this.$els.foodsWrapper, {});
+			}
 		}
 	};
 </script>
@@ -149,7 +158,7 @@
 					font-weight: 700
 					line-height: 24px
 					.now
-						margin-right: 18px
+						margin-right: 8px
 						font-size:14px
 						color: rgb(240,20,20)
 					.old

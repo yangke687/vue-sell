@@ -140,6 +140,7 @@
 					font-size: 10px
 					color: rgb(147,153,159)
 				.desc
+					line-height: 12px
 					margin-bottom: 8px
 				.extra
 					.count

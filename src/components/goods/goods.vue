@@ -2,7 +2,7 @@
 <div class="goods">
   <div class="menu-wrapper" v-el:menu-wrapper>
     <ul>
-      <li v-for="item in goods" class="menu-item" :class="{'current': currentIndex===$index }">
+      <li v-for="item in goods" class="menu-item" :class="{'current': currentIndex===$index }" @click="selectMenu($index,$event)">
         <span class="text border-1px" >
         <span v-show="item.type>0" class="icon" :class="classMap[item.type]"></span>{{item.name}}
         </span>
@@ -80,8 +80,19 @@
       }
     },
     methods: {
+      selectMenu(idx, $event){
+        if (!$event._constructed){
+          // check if it is browser native event
+          return;
+        }
+        let foodsList = this.$els.foodsWrapper.getElementsByClassName('food-list-hook');
+        let el = foodsList[idx];
+        this.foodsScroll.scrollToElement(el, 300);
+      },
       _initScroll(){
-        this.menuScroll = new BScroll(this.$els.menuWrapper, {});
+        this.menuScroll = new BScroll(this.$els.menuWrapper, {
+          click: true
+        });
         this.foodsScroll = new BScroll(this.$els.foodsWrapper, {
           probeType: 3
         });

@@ -33,7 +33,7 @@
       </li>
     </ul>
   </div>
-  <shopcart></shopcart>
+  <shopcart :delivery-price="seller.deliveryPrice" :min-price="seller.minPrice"></shopcart>
 </div>
 </template>
 <script type="text/ecmascript-6">
@@ -49,6 +49,7 @@
       }
     },
     created(){
+      console.log('goods', this.seller.deliveryPrice);
       this.$http.get('/api/goods').then(function(res){
         res = res.body;
         if (res.errno === ERR_OK){

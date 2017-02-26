@@ -12,7 +12,7 @@
         <a v-link="{path: '/seller'}">商家</a>
       </div>
   	</div>
-  	<router-view></router-view>
+  	<router-view :seller="seller"></router-view>
   </div>
 </template>
 <script type="text/ecmascript-6">
@@ -28,7 +28,7 @@
       this.$http.get('/api/seller').then((res) => {
         res = res.body;
         if (res.errno === ERR_OK){
-          this.seller = res.data;
+          this.seller = Object.assign({}, this.seller, res.data);
         }
       });
     },

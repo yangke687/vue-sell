@@ -49,7 +49,6 @@
       }
     },
     created(){
-      console.log('goods', this.seller.deliveryPrice);
       this.$http.get('/api/goods').then(function(res){
         res = res.body;
         if (res.errno === ERR_OK){

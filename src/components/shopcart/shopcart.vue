@@ -3,15 +3,16 @@
 		<div class="content">
 			<div class="content-left">
 				<div class="logo-wrapper">
-					<div class="logo">
+					<div class="logo" :class="{'highlight': totalCount>0}">
 						<span class="icon-shopping_cart"></span>
 					</div>
+					<div v-show="totalCount>0" class="num" :class="{'highlight':totalCount}">{{totalCount}}</div>
 				</div>
-				<div class="price">¥ {{ totalPrice }}</div>
+				<div class="price" :class="{'highlight':totalPrice>0}">¥ {{ totalPrice }}</div>
 				<div class="desc">另需配送费 ¥ {{ deliveryPrice }}元</div>
 			</div>
 			<div class="content-right">
-				<div class="pay">¥{{ minPrice }}元起配送</div>
+				<div class="pay" :class="{'enough': this.totalPrice>=this.minPrice}">{{payDesc}}</div>
 			</div>
 		</div>
 	</div>
@@ -52,6 +53,15 @@ export default {
 				count += food.count;
 			});
 			return count;
+		},
+		payDesc() {
+			if (this.totalPrice === 0) {
+				return '¥' + this.minPrice + '元起配送';
+			} else if (this.totalPrice < this.minPrice) {
+				return '还差' + Math.abs(this.minPrice - this.totalPrice) + '元配送';
+			} else {
+				return '去结算';
+			}
 		}
 	}
 };
@@ -88,10 +98,28 @@ export default {
 						text-align: center
 						background: #2b343c
 						border-radius: 50%
-						span
+						&.highlight
+							background: rgb(0,160,220)
+						.icon-shopping_cart
 							line-height: 44px
 						    font-size: 24px
 						    color: #80858a
+						    &.highlight
+								color: #fff
+					.num
+						position: absolute;
+						top: 0
+						right: 0
+						width: 24px
+						height: 16px
+						line-height: 16px
+						text-align: center
+						border-radius: 16px
+						font-size: 9px
+						font-weight: 700
+						color: #FFF
+						background: rgb(240,20,20)
+						box-shadow: 0 4px 8px 0 rgba(0,0,0,.4)
 				.price
 					display: inline-block
 					vertical-align: top
@@ -103,6 +131,8 @@ export default {
 					color: rgba(255,255,255,.4)
 					font-size: 16px
 					font-weight: 700
+					&.highlight
+						color: #FFF
 				.desc
 					display: inline-block
 					vertical-align: top
@@ -121,6 +151,9 @@ export default {
 					color: rgba(255,255,255,.4)
 					font-weight: 700
 					background: #2b333b
+					&.enough
+						background: #00b43c
+						color: #FFF
 
 </style>
 

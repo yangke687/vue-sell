@@ -1,7 +1,7 @@
 <template>
 	<div class="cartcontrol">
-		<div class="cart-decrease icon-remove_circle_outline" v-show="food.count>0"></div>
-		<div class="cart-count" v-show="food.count>=0">{{ food.count }}</div>
+		<div class="cart-decrease icon-remove_circle_outline" v-show="food.count>0" @click="decreaseCart"></div>
+		<div class="cart-count" v-show="food.count>0">{{ food.count }}</div>
 		<div class="cart-increase icon-add_circle" @click="addCart"></div>
 	</div>
 </template>
@@ -19,29 +19,40 @@
 				if (!event._constructed) {
 					return;
 				}
-				console.log('click', this.food.name);
-				if (!this.food.count || typeof this.food.count === 'undefined') {
-					Vue.set(this.food, 'cuont', 1);
+				if (!this.food.count) {
+					Vue.set(this.food, 'count', 1);
 				} else {
 					this.food.count++;
 				}
-				console.log('count', this.food.count);
-				this.$dispatch('cart.add', event.target);
-			}
+			},
+      decreaseCart(event) {
+        if (!event._constructed) {
+          return;
+        }
+        if (this.food.count) {
+          this.food.count--;
+        }
+      }
 		}
 	};
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
-.cartcontrol
-	font-size: 0
-	.cart-decrease,.cart-increase
-		display:inline-block
-		padding: 6px
-		line-height: 24px
-		font-size: 24px
-		color: rgb(0,160,220)
-	.cart-count
-		display:inline-block
-
+  .cartcontrol
+    font-size: 0
+    .cart-decrease,.cart-increase
+      display:inline-block
+      padding: 6px
+      line-height: 24px
+      font-size: 24px
+      color: rgb(0,160,220)
+    .cart-count
+      width: 12px
+      display: inline-block
+      font-size: 10px
+      vertical-align: top
+      padding-top: 6px
+      line-height: 24px
+      text-align: center
+      color: rgb(147,153,159)
 </style>

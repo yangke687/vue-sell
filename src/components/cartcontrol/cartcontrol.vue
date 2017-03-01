@@ -26,6 +26,7 @@
 				} else {
 					this.food.count++;
 				}
+        this.$dispatch('cart.add', event.target);
 			},
       decreaseCart(event) {
         if (!event._constructed) {
@@ -45,7 +46,7 @@
     .cart-decrease
       display:inline-block
       padding: 6px
-      transition: all 0.4s linear
+      transition: all .4s linear
       &.move-transition
         opacity: 1
         transform: translate3D(0,0,0)
@@ -54,13 +55,18 @@
           line-height: 24px
           font-size: 24px
           color: rgb(0,160,220)
-          transition: all 0.4s linear
+          transition: all .4s linear
           transform: rotate(0)
-      &.move-enter,&.move-leave
+      &.move-enter
         opacity: 0
         transform: translate3D(24px,0,0)
         .inner
           transform: rotate(180deg)
+      &.move-leave
+        opacity: 0
+        transform: translate3D(24px,0,0)
+        .inner
+          transform: rotate(180deg);
     .cart-increase
       display:inline-block
       padding: 6px

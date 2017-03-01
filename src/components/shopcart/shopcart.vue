@@ -17,7 +17,7 @@
 		</div>
 		<div class="ball-container">
 			<div v-for="ball in balls" v-show="ball.show" class="ball" transition="drop">
-				<div class="inner"></div>
+				<div class="inner inner-hook"></div>
 			</div>
 		</div>
 	</div>
@@ -48,26 +48,80 @@ export default {
 		return {
 			balls: [
 				{
+					id: 0,
 					show: false
 				},
 				{
+					id: 1,
 					show: false
 				},
 				{
+					id: 2,
 					show: false
 				},
 				{
+					id: 3,
 					show: false
 				},
 				{
+					id: 4,
 					show: false
 				}
-			]
+			],
+			dropBalls: []
 		};
 	},
 	methods: {
 		drop(el){
-			console.log(el);
+			for (let i = 0; i < this.balls.length; i++) {
+				let ball = this.balls[i];
+				console.log('drop ball', ball);
+				if (!ball.show) {
+					ball.show = true;
+					ball.el = el;
+					this.dropBalls.push(ball);
+					return;
+				}
+			}
+		}
+	},
+	transitions: {
+		drop: {
+			beforeEnter(el) {
+				for (let i = 0; i < this.balls.length; i++) {
+					let ball = this.balls[i];
+					if (ball.show) {
+						let rect = ball.el.getBoundingClientRect();
+						let x = rect.left - 32;
+						let y = -(window.innerHeight - rect.top - 22);
+						el.style.display = 'block';
+						el.style.webkitTransform = `translate3d(0,${y}px,0)`;
+						el.style.transform = `translate3d(0,${y}px,0)`;
+						let inner = el.getElementsByClassName('inner-hook')[0];
+						inner.style.webkitTransform = `translate3d(${x}px,0,0)`;
+						inner.style.transform = `translate3d(${x}px,0,0)`;
+					}
+				}
+			},
+			enter(el) {
+				this.$nextTick(() => {
+					el.offsetWidth;
+					el.style.webkitTransform = 'translate3d(0,0,0)';
+					el.style.transform = 'translate3d(0,0,0)';
+					let inner = el.getElementsByClassName('inner-hook')[0];
+					inner.style.webkitTransform = 'translate3d(0,0,0)';
+					inner.style.transform = 'translate3d(0,0,0)';
+				});
+			},
+			afterEnter(el) {
+				let ball = this.dropBalls.shift();
+				console.log('dropBalls: ', this.dropBalls, ball);
+				if (ball) {
+					console.log('shift ball', ball);
+					ball.show = false;
+					el.style.display = 'none';
+				}
+			}
 		}
 	},
 	computed: {
@@ -192,13 +246,13 @@ export default {
 				bottom: 22px
 				z-index: 200
 				&.drop-transition
-					transition: all .4s 
+					transition: all .4s cubic-bezier(.49,-0.29,.75,.41)
 					.inner
 						width: 16px
 						height: 16px
 						background-color: rgb(0,160,220)
 						border-radius: 50%	
-						transition: all .4s	
+						transition: all .4s	linear
 </style>
 
 

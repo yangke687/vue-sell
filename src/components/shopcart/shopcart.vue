@@ -1,6 +1,6 @@
 <template>
 	<div class="shopcart">
-		<div class="content">
+		<div class="content" @click="toggle">
 			<div class="content-left">
 				<div class="logo-wrapper">
 					<div class="logo" :class="{'highlight': totalCount>0}">
@@ -12,7 +12,7 @@
 				<div class="desc">另需配送费 ¥ {{ deliveryPrice }}元</div>
 			</div>
 			<div class="content-right">
-				<div class="pay" :class="{'enough': this.totalPrice>=this.minPrice}">{{payDesc}}</div>
+				<button class="pay" :class="{'enough': this.totalPrice>=this.minPrice}" :disabled="this.totalPrice<this.minPrice">{{payDesc}}</button>
 			</div>
 		</div>
 		<div class="ball-container">
@@ -20,10 +20,30 @@
 				<div class="inner inner-hook"></div>
 			</div>
 		</div>
+		<div class="shopcart-list" v-show="listShow">
+			<div class="list-header">
+				<h1 class="title">购物车</h1>
+				<span class="empty">清空</span>
+			</div>
+			<div class="list-content">
+				<ul>
+					<li class="food" v-for="food in selectFoods">
+						<span class="name">{{food.name}}</span>
+						<div class="price">
+							<span>¥{{food.price*food.count}}</span>
+						</div>
+						<div class="cartcontrol-wrapper">
+							<cartcontrol :food="food"></cartcontrol>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
 	</div>
 </template>
 
 <script type="text/ecmascript-6">
+import cartcontrol from 'components/cartcontrol/cartcontrol.vue';
 export default {
 	props: {
 		deliveryPrice: {
@@ -68,20 +88,26 @@ export default {
 					show: false
 				}
 			],
-			dropBalls: []
+			dropBalls: [],
+			fold: true
 		};
 	},
 	methods: {
 		drop(el){
 			for (let i = 0; i < this.balls.length; i++) {
 				let ball = this.balls[i];
-				console.log('drop ball', ball);
 				if (!ball.show) {
 					ball.show = true;
 					ball.el = el;
 					this.dropBalls.push(ball);
 					return;
 				}
+			}
+		},
+		toggle() {
+			if (this.totalCount) {
+				console.log('here');
+				this.fold = !this.fold;
 			}
 		}
 	},
@@ -147,7 +173,17 @@ export default {
 			} else {
 				return '去结算';
 			}
+		},
+		listShow() {
+			if (!this.totalCount){ // totalCount == 0
+				this.fold = true;
+				return;
+			}
+			return !this.fold;
 		}
+	},
+	components: {
+		cartcontrol: cartcontrol
 	}
 };
 </script>
@@ -229,6 +265,10 @@ export default {
 				flex: 0 0 105px
 				wdith: 105px
 				.pay
+					display: inline-block
+					border-width: 0
+					outline-width: 0
+					width: 100%
 					height: 48px
 					line-height: 48px
 					text-align: center
@@ -253,6 +293,9 @@ export default {
 						background-color: rgb(0,160,220)
 						border-radius: 50%	
 						transition: all .4s	linear
+		.shopcart-list
+			position: fixed;
+			top: 0;
 </style>
 
 

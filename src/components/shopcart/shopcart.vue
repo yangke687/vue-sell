@@ -20,7 +20,7 @@
 				<div class="inner inner-hook"></div>
 			</div>
 		</div>
-		<div class="shopcart-list" v-show="listShow">
+		<div class="shopcart-list" v-show="listShow" transition="fold">
 			<div class="list-header">
 				<h1 class="title">购物车</h1>
 				<span class="empty">清空</span>
@@ -189,6 +189,7 @@ export default {
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
+	@import '../../common/stylus/mixin.styl'
 	.shopcart
 		position: fixed
 		left: 0
@@ -294,8 +295,56 @@ export default {
 						border-radius: 50%	
 						transition: all .4s	linear
 		.shopcart-list
-			position: fixed;
-			top: 0;
+			position: absolute
+			top: 0
+			left: 0
+			right: 0
+			z-index: -1
+			&.fold-transition
+				transition: all .5s
+				transform: translate3d(0,-100%,0)
+			&.fold-enter,&.fold-leave
+				transform: translate3d(0,0,0)
+			.list-header
+				height: 40px
+				line-height: 40px
+				padding: 0 18px
+				background: #f3f5f7
+				border-bottom: 1px solid rgba(7,17,27,.1)
+				.title
+					float: left
+					font-size: 14px
+					color: rgb(7,17,27)
+				.empty
+					float: right
+					font-size: 12px
+					color: rgb(0,160,220)
+			.list-content
+				padding: 0 18px
+				max-height: 217px
+				overflow: hidden
+				background: #fff
+				.food
+					position: relative
+					padding: 12px 0
+					box-sizing: border-box
+					border-1px(rgba(7,17,27,.1))
+					.name
+						line-height 24px
+						font-size: 14px
+						color: rgb(7,17,27)
+					.price
+						position: absolute
+						right: 90px
+						bottom: 12px
+						line-height: 24px
+						font-size: 14px
+						font-weight: 700
+						color: red
+					.cartcontrol-wrapper
+						position: absolute
+						bottom: 6px
+						right: 0
 </style>
 
 

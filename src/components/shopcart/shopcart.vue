@@ -40,6 +40,7 @@
 			</div>
 		</div>
 	</div>
+	<div class="list-mask" v-show="listShow" transition="fade"></div>
 </template>
 
 <script type="text/ecmascript-6">
@@ -107,7 +108,6 @@ export default {
 		},
 		toggle() {
 			if (this.totalCount) {
-				console.log('here');
 				this.fold = !this.fold;
 			}
 		},
@@ -363,6 +363,20 @@ export default {
 						position: absolute
 						bottom: 6px
 						right: 0
+	.list-mask
+		position: fixed
+		top: 0
+		left: 0
+		right: 0
+		bottom: 0
+		z-index: 40
+		&.fade-transition
+			transition: all .5s
+			opacity: 1
+			background: rgba(7,17,27,.6)
+		&.fade-enter,&.fade-leave
+			opacity: 0
+			background: rgba(7,17,27,0)
 </style>
 
 

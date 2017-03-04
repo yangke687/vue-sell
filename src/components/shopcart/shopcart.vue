@@ -12,7 +12,7 @@
 				<div class="desc">另需配送费 ¥ {{ deliveryPrice }}元</div>
 			</div>
 			<div class="content-right">
-				<button class="pay" :class="{'enough': this.totalPrice>=this.minPrice}" :disabled="this.totalPrice<this.minPrice">{{payDesc}}</button>
+				<button class="pay" :class="{'enough': this.totalPrice>=this.minPrice}" :disabled="this.totalPrice<this.minPrice" @click.stop.prevent="pay">{{payDesc}}</button>
 			</div>
 		</div>
 		<div class="ball-container">
@@ -40,7 +40,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="list-mask" v-show="listShow" transition="fade"></div>
+	<div class="list-mask" v-show="listShow" transition="fade" @click="hideList"></div>
 </template>
 
 <script type="text/ecmascript-6">
@@ -111,10 +111,19 @@ export default {
 				this.fold = !this.fold;
 			}
 		},
+		hideList() {
+			this.fold = true;
+		},
 		empty() {
 			this.selectFoods.forEach(function(food) {
 				food.count = 0;
 			});
+		},
+		pay() {
+			if (this.totalPrice > this.minPrice) {
+				window.alert(`您需要支付¥${this.totalPrice}元`);
+			}
+			return;
 		}
 	},
 	transitions: {

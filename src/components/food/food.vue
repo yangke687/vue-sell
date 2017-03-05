@@ -2,7 +2,10 @@
 	<div v-show="showFlag" class="food" transition="move">
 		<div class="food-content">
 			<div class="image-cotnent">
-				<img :src="food.img" />
+				<div class="image-header">
+					<img :src="food.image" />
+					<i class="icon-arrow_lift"></i>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -42,4 +45,15 @@
 			transform: translate3d(0,0,0)
 		&.move-enter,&.move-leave
 			transform: translate3d(100%,0,0)
+		.image-header
+			position: relative
+			width: 100%
+			height: 0
+			padding-top: 100%
+			img
+				position: absolute
+				top: 0
+				left: 0
+				width: 100%
+				height: 100%
 </style>

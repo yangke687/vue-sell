@@ -1,35 +1,42 @@
 <template>
 	<div v-show="showFlag" class="food" transition="move" v-el:food>
 		<div class="food-content">
-			<div class="image-cotnent">
-				<div class="image-header">
-					<img :src="food.image" />
-					<div class="back" @click="hide">
-						<i class="icon-arrow_lift"></i>
-					</div>
-				</div>
-				<div class="content">
-					<h1 class="title">{{food.name}}<h1>
-					<div class="detail">
-						<span class="sell-count">月售{{food.sellCount}}份</span>
-						<span class="rating">好评率{{food.rating}}％</span>
-					</div>
-					<div class="price">
-						<span class="now">¥{{food.price}}</span><span class="old" v-show="food.oldPrice">¥{{food.oldPrice}}</sapn>
-					</div>
+			<div class="image-header">
+				<img :src="food.image" />
+				<div class="back" @click="hide">
+					<i class="icon-arrow_lift"></i>
 				</div>
 			</div>
+			<div class="content">
+				<h1 class="title">{{food.name}}<h1>
+				<div class="detail">
+					<span class="sell-count">月售{{food.sellCount}}份</span>
+					<span class="rating">好评率{{food.rating}}％</span>
+				</div>
+				<div class="price">
+					<span class="now">¥{{food.price}}</span><span class="old" v-show="food.oldPrice">¥{{food.oldPrice}}</sapn>
+				</div>
+			</div>
+			<div class="cartcontrol-wrapper">
+				<cartcontrol :food="food"><cartcontrol>
+			</div>
+			<div transition="fade" @click.stop.prevent="addFirst" class="buy" v-show="!food.count || food.count===0">加入购物车</div>
 		</div>
 	</div>
 </template>
 
 <script type="text/ecmascript-6">
 	import Bscroll from 'better-scroll';
+	import cartcontrol from 'components/cartcontrol/cartcontrol.vue';
+	import Vue from 'vue';
 	export default{
 		props: {
 			food: {
 				type: Object
 			}
+		},
+		components: {
+			cartcontrol: cartcontrol
 		},
 		data() {
 			return {
@@ -51,6 +58,13 @@
 			},
 			hide() {
 				this.showFlag = false;
+			},
+			addFirst(event) {
+				if (!event._constructed) {
+					return;
+				}
+				Vue.set(this.food, 'count', 1);
+				this.$dispatch('cart.add', event.target);
 			}
 		}
 	};
@@ -120,4 +134,25 @@
 					text-decoration: line-through
 					font-size: 10px
 					color: rgb(147,153,159)
+		.cartcontrol-wrapper
+			position: absolute
+			right: 12px
+			bottom: 12px
+		.buy
+			position: absolute;
+			right: 18px
+			bottom: 18px
+			z-index: 10
+			height: 24px
+			line-height: 24px
+			padding: 0 12px
+			box-sizing: border-box
+			font-size: 10px
+			border-radius: 12px
+			color: #FFF
+			background: rgb(0,160,220)
+			&.fade-transition
+				transition: all 0.2s
+			&.fade-enter,&.fade-leave
+				opacity: 0
 </style>

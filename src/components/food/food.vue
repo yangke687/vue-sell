@@ -1,5 +1,5 @@
 <template>
-	<div v-show="showFlag" class="food" transition="move">
+	<div v-show="showFlag" class="food" transition="move" v-el:food>
 		<div class="food-content">
 			<div class="image-cotnent">
 				<div class="image-header">
@@ -24,6 +24,7 @@
 </template>
 
 <script type="text/ecmascript-6">
+	import Bscroll from 'better-scroll';
 	export default{
 		props: {
 			food: {
@@ -38,6 +39,15 @@
 		methods: {
 			show() {
 				this.showFlag = true;
+				this.$nextTick(function(){
+					if (!this.scroll) {
+						this.scroll = new Bscroll(this.$els.food, {
+							click: true
+						});
+					} else {
+						this.scroll.refresh();
+					}
+				});
 			},
 			hide() {
 				this.showFlag = false;

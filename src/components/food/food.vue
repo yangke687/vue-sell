@@ -16,11 +16,12 @@
 				<div class="price">
 					<span class="now">¥{{food.price}}</span><span class="old" v-show="food.oldPrice">¥{{food.oldPrice}}</sapn>
 				</div>
+				<div class="cartcontrol-wrapper">
+					<cartcontrol :food="food"><cartcontrol>
+				</div>
+				<div transition="fade" @click.stop.prevent="addFirst" class="buy" v-show="!food.count || food.count===0">加入购物车</div>
 			</div>
-			<div class="cartcontrol-wrapper">
-				<cartcontrol :food="food"><cartcontrol>
-			</div>
-			<div transition="fade" @click.stop.prevent="addFirst" class="buy" v-show="!food.count || food.count===0">加入购物车</div>
+			<split></split>
 		</div>
 	</div>
 </template>
@@ -29,6 +30,7 @@
 	import Bscroll from 'better-scroll';
 	import cartcontrol from 'components/cartcontrol/cartcontrol.vue';
 	import Vue from 'vue';
+	import split from 'components/split/split.vue';
 	export default{
 		props: {
 			food: {
@@ -36,7 +38,8 @@
 			}
 		},
 		components: {
-			cartcontrol: cartcontrol
+			cartcontrol: cartcontrol,
+			split: split
 		},
 		data() {
 			return {
@@ -106,6 +109,7 @@
 					font-size: 20px
 					color: #FFF
 		.content
+			position: relative
 			padding: 18px
 			.title
 				line-height: 14px

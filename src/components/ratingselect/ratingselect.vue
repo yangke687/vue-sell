@@ -1,7 +1,7 @@
 <template>
 	<div class="ratingSelect">
 		<div class="rating-type border-1px">
-			<span @click="select(2, $event)" class="block all positive" :class="{active: selectType===2}">{{desc.all}}<span class="count">{{ratings.length}}</span></span>
+			<span @click="select(2, $event)" class="block all positive" :class="{active: selectType===2}">{{desc.all}}<span class="count">{{ ratings ? ratings.length : null}}</span></span>
 			<span @click="select(0, $event)" class="block positive" :class="{active: selectType===0}">{{desc.positive}}<span class="count">{{positives.length}}</span></span>
 			<span @click="select(1, $event)" class="block negative" :class="{active: selectType===1}">{{desc.negative}}<span class="count">{{negatives.length}}</span></span>
 		</div>
@@ -15,7 +15,7 @@
 <script type="text/ecmascript-6">
 	const POSITIVE = 0;
 	const NEGATIVE = 1;
-	console.log(POSITIVE, NEGATIVE);
+	console.log('ratingselect', POSITIVE, NEGATIVE);
 	const ALL = 2;
 	export default {
 		props: {
@@ -46,11 +46,17 @@
 		},
 		computed: {
 			positives() {
+				if (!this.ratings) {
+					return 0;
+				}
 				return this.ratings.filter((rating) => {
 					return rating.rateType === POSITIVE;
 				});
 			},
 			negatives() {
+				if (!this.ratings) {
+					return 0;
+				}
 				return this.ratings.filter((rating) => {
 					return rating.rateType === NEGATIVE;
 				});

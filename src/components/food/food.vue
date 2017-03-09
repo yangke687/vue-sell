@@ -30,6 +30,26 @@
 			<div class="rating">
 				<h1 class="title">商品评价</h1>
 				<ratingselect :select-type="selectType" :only-content="onlyContent" :desc="desc" :ratings="food.ratings"></ratingselect>
+				<div class="rating-wrapper">
+					<ul v-show="food.ratings && food.ratings.length ">
+						<li v-for="rating in food.ratings" class="rating-item">
+							<div class="user">
+								<span class="name">{{rating.username}}</span>
+								<img class="avatar" :src="rating.avatar" alt="" width="12" height="12" />
+							</div>
+							<div class="time">
+								{{ rating.rateTime }}
+							</div>
+							<div class="text">
+								<p>
+									<span :class="{'icon-thumb_up':rating.rateType===0,'icon-thumb_down':rating.rateType===1}"></span>
+									{{rating.text}}
+								</p>
+							</div>
+						</li>
+					</ul>
+					<div class="no-rating" v-show="!food.ratings || !foot.ratings.length"></div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -45,7 +65,7 @@
 	const POSITIVE = 0;
 	const NEGATIVE = 1;
 	const ALL = 2;
-	console.log(POSITIVE, NEGATIVE);
+	console.log('food', POSITIVE, NEGATIVE);
 
 	export default{
 		props: {

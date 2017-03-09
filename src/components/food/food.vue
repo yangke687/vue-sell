@@ -32,7 +32,7 @@
 				<ratingselect :select-type="selectType" :only-content="onlyContent" :desc="desc" :ratings="food.ratings"></ratingselect>
 				<div class="rating-wrapper">
 					<ul v-show="food.ratings && food.ratings.length ">
-						<li v-for="rating in food.ratings" class="rating-item">
+						<li v-show="needShow(rating.rateType, rating.text)" v-for="rating in food.ratings" class="rating-item">
 							<div class="user">
 								<span class="name">{{rating.username}}</span>
 								<img class="avatar" :src="rating.avatar" alt="" width="12" height="12" />
@@ -82,7 +82,7 @@
 			return {
 				showFlag: false,
 				selectType: ALL,
-				onlyContent: true,
+				onlyContent: false,
 				desc: {
 					all: '全部',
 					positive: '推荐',
@@ -90,11 +90,25 @@
 				}
 			};
 		},
+		events: {
+			'ratingtype.select'(type){
+				this.selectType = type;
+				this.$nextTick(function(){
+					this.scroll.refresh();
+				});
+			},
+			'content.toggle'(onlyContent){
+				this.onlyContent = onlyContent;
+				this.$nextTick(function(){
+					this.scroll.refresh();
+				});
+			}
+		},
 		methods: {
 			show() {
 				this.showFlag = true;
-				this.selectType = NEGATIVE;
-				this.onlyContent = true;
+				this.selectType = ALL;
+				this.onlyContent = false;
 				this.$nextTick(function(){
 					if (!this.scroll) {
 						this.scroll = new Bscroll(this.$els.food, {
@@ -114,6 +128,16 @@
 				}
 				Vue.set(this.food, 'count', 1);
 				this.$dispatch('cart.add', event.target);
+			},
+			needShow(type, text) {
+				if (this.onlyContent && !text) {
+					return false;
+				}
+				if (this.selectType === ALL) {
+					return true;
+				} else {
+					return this.selectType === type;
+				}
 			}
 		}
 	};

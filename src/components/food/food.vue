@@ -21,10 +21,15 @@
 				</div>
 				<div transition="fade" @click.stop.prevent="addFirst" class="buy" v-show="!food.count || food.count===0">加入购物车</div>
 			</div>
-			<split></split>
+			<split v-show="food.info"></split>
 			<div class="info" v-show="food.info">
 				<h1 class="title">商品信息</h1>
 				<p class="text">{{ food.info }}</p>
+			</div>
+			<split></split>
+			<div class="rating">
+				<h1 class="title">商品评价</h1>
+				<ratingselect :select-type="selectType" :only-content="onlyContent" :desc="desc" :ratings="food.ratings"></ratingselect>
 			</div>
 		</div>
 	</div>
@@ -35,6 +40,13 @@
 	import cartcontrol from 'components/cartcontrol/cartcontrol.vue';
 	import Vue from 'vue';
 	import split from 'components/split/split.vue';
+	import ratingselect from 'components/ratingselect/ratingselect.vue';
+
+	const POSITIVE = 0;
+	const NEGATIVE = 1;
+	const ALL = 2;
+	console.log(POSITIVE, NEGATIVE);
+
 	export default{
 		props: {
 			food: {
@@ -43,16 +55,26 @@
 		},
 		components: {
 			cartcontrol: cartcontrol,
-			split: split
+			split: split,
+			ratingselect: ratingselect
 		},
 		data() {
 			return {
-				showFlag: false
+				showFlag: false,
+				selectType: ALL,
+				onlyContent: true,
+				desc: {
+					all: '全部',
+					positive: '推荐',
+					negative: '吐槽'
+				}
 			};
 		},
 		methods: {
 			show() {
 				this.showFlag = true;
+				this.selectType = ALL;
+				this.onContent = true;
 				this.$nextTick(function(){
 					if (!this.scroll) {
 						this.scroll = new Bscroll(this.$els.food, {

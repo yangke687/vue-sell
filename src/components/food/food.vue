@@ -74,7 +74,7 @@
 			show() {
 				this.showFlag = true;
 				this.selectType = NEGATIVE;
-				this.onContent = true;
+				this.onlyContent = true;
 				this.$nextTick(function(){
 					if (!this.scroll) {
 						this.scroll = new Bscroll(this.$els.food, {

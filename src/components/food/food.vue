@@ -48,7 +48,7 @@
 							</div>
 						</li>
 					</ul>
-					<div class="no-rating" v-show="!food.ratings || !foot.ratings.length"></div>
+					<div class="no-rating" v-show="!food.ratings || !food.ratings.length"></div>
 				</div>
 			</div>
 		</div>
@@ -120,6 +120,7 @@
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
+@import "../../common/stylus/mixin.styl"
 	.food
 		position: fixed
 		left: 0
@@ -224,4 +225,41 @@
 				margin-left: 18px
 				font-size: 14px
 				color: rgb(7,17,27)
+			.rating-wrapper
+				padding: 0 18px
+				.rating-item
+					position: relative
+					padding: 16px 0
+					border-1px(rgba(7,17,27,.1))
+					.user
+						position: absolute
+						right: 0
+						top: 16px
+						line-height: 12px
+						font-size: 0
+						.name
+							display: inline-block
+							margin-right: 6px
+							vertical-align: top
+							font-size: 10px
+							color: rgb(147,153,159)
+						.avatar
+							border-radius: 50%
+					.time
+						margin-bottom: 6px
+						line-height: 12px
+						font-size: 10px
+						color: rgb(147,153,159)
+					.text
+						line-height: 16px
+						font-size: 12px
+						color: rgb(7,17,27)
+					.icon-thumb_up,.icon-thumb_down
+						line-height: 16px
+						margin-right: 4px
+						font-size: 12px
+					.icon-thumb_up
+						color: rgb(0,160,220)
+					.icon-thumb_down
+						color: rgb(147,153,159)
 </style>

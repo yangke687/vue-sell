@@ -38,7 +38,7 @@
 								<img class="avatar" :src="rating.avatar" alt="" width="12" height="12" />
 							</div>
 							<div class="time">
-								{{ rating.rateTime }}
+								{{ rating.rateTime | formatDate }}
 							</div>
 							<div class="text">
 								<p>
@@ -61,6 +61,7 @@
 	import Vue from 'vue';
 	import split from 'components/split/split.vue';
 	import ratingselect from 'components/ratingselect/ratingselect.vue';
+	import {formatDate} from 'common/js/date.js';
 
 	const POSITIVE = 0;
 	const NEGATIVE = 1;
@@ -138,6 +139,12 @@
 				} else {
 					return this.selectType === type;
 				}
+			}
+		},
+		filters: {
+			formatDate(timestamp) {
+				let date = new Date(timestamp);
+				return formatDate(date, 'yyyy-MM-dd hh:mm');
 			}
 		}
 	};

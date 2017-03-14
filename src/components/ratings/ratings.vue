@@ -72,9 +72,13 @@
 					line-height: 10px
 					font-size: 10px
 					color: rgb(147,153,159)
+				@media only screen and (max-width: 320px)
+					flex-basis: 120px
 			.overview-right
 				flex: 1
 				padding: 6px 0 6px 24px
+				@media only screen and (max-width: 320px)
+					padding-left: 6px
 				.score-wrapper
 					line-height: 18px
 					margin-bottom: 8px

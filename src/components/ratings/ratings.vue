@@ -24,20 +24,43 @@
 					</div>
 				</div>
 			</div>
+			<split></split>
+			<ratingselect :select-type="selectType" :ratings="ratings" :only-content="onlyContent" ></ratingselect>
 		</div>
 	</div>
 </template>
 
 <script type="text/ecmascript-6">
 	import star from 'components/star/star.vue';
+	import split from 'components/split/split.vue';
+	import ratingselect from 'components/ratingselect/ratingselect.vue';
+	const ALL = 2;
+
 	export default {
 		props: {
 			seller: {
 				type: Object
 			}
 		},
+		data() {
+			return {
+				ratings: [],
+				selectType: ALL,
+				onlyContent: true
+			};
+		},
+		created() {
+			this.$http.get('/api/ratings').then((res) => {
+				res = res.body;
+				if (res.errno === 0) {
+					this.ratings = res.data;
+				}
+			});
+		},
 		components: {
-			star: star
+			star: star,
+			split: split,
+			ratingselect: ratingselect
 		}
 	};
 </script>

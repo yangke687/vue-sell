@@ -35,13 +35,13 @@
 						<div class="content">
 							<h1 class="name">{{rating.username}}</h1>
 							<div class="star-wrapper">
-								<star :size+"24" :score="rating-score"></star>
-								<span class="delivery" v-show="rating.deliveryTime">{{rating.deliveryTime}}</span>
+								<star :size="24" :score="rating-score"></star>
+								<span class="delivery" v-show="rating.deliveryTime">{{rating.deliveryTime}} 分钟送达</span>
 							</div>
 							<p class="text">{{rating.text}}</p>
 							<div class="recommend" v-show="rating.recommend && rating.recommend.length">
 								<span class="icon-thumb_up"></span>
-								<span v-for="item in rating.recommend">{{item}}</span>
+								<span v-for="item in rating.recommend" class="item">{{item}}</span>
 							</div>
 							<div class="time">
 								{{ rating.rateTime | formatDate }}
@@ -103,6 +103,7 @@
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
+	@import "../../common/stylus/mixin.styl";
 	.ratings
 		position: absolute
 		top: 174px
@@ -169,4 +170,65 @@
 						font-size: 12px
 						color: rgb(147,153,159)
 						padding-left: 12px
+		.rating-wrapper
+			padding: 0 18px
+			.rating-item
+				display: flex
+				padding: 18px 0
+				border-1px(rgba(7,17,27,.1))
+				.avatar
+					flex: 0 0 28px
+					width: 28px
+					margin-right: 12px
+					img
+						border-radius: 50%
+				.content
+					position: relative
+					flex: 1
+					.name
+						line-height: 12px
+						font-size: 10px
+						color: rgb(7,17,27)
+						margin-bottom: 4px
+					.star-wrapper
+						margin-bottom: 6px
+						font-size: 0px
+						.star
+							display: inline-block
+							vertical-align: top
+							margin-right: 6px
+						.delivery
+							display: inline-block
+							vertical-align: top
+							line-height: 12px
+							font-size: 12px
+							color: rgb(147,153,159)
+					.text
+						line-height: 18px
+						font-size: 12px
+						margin-bottom: 8px
+					.recommend
+						line-height: 16px
+						font-size: 0
+						.icon-thumb_up,.item
+							display: inline-block
+							margin-right: 8px
+							margin-bottom: 4px
+							font-size: 9px
+						.icon-thumb_up
+							color: rgb(0,106,220)
+						.item
+							padding: 6px
+							border: 1px solid rgba(7,17,27,.1)
+							border-radius: 1px
+							color: rgb(147,153,159)
+							background: #FFF
+					.time
+						position: absolute
+						top: 0
+						right: 0
+						line-height: 12px
+						font-size: 10px
+						color: rgb(147,153,159)
+
 </style>

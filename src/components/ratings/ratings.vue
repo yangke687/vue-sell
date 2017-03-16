@@ -28,7 +28,7 @@
 			<ratingselect :select-type="selectType" :ratings="ratings" :only-content="onlyContent" ></ratingselect>
 			<div class="rating-wrapper">
 				<ul>
-					<li v-for="rating in ratings" class="rating-item">
+					<li v-show="needShow(rating.rateType,rating.text)" v-for="rating in ratings" class="rating-item">
 						<div class="avatar">
 							<img :src="rating.avatar" alt="" width="28" height="28" />
 						</div>
@@ -98,6 +98,33 @@
 			star: star,
 			split: split,
 			ratingselect: ratingselect
+		},
+		events: {
+			'ratingtype.select'(type) {
+				console.log(type);
+				this.selectType = type;
+				this.$nextTick(function(){
+					this.scroll.refresh();
+				}.bind(this));
+			},
+			'content.toggle'(onlyContent){
+				this.onlyContent = onlyContent;
+				this.$nextTick(function(){
+					this.scroll.refresh();
+				}.bind(this));
+			}
+		},
+		methods: {
+			needShow(type, text) {
+				if (this.onlyContent && !text) {
+					return false;
+				}
+				if (this.selectType === ALL) {
+					return true;
+				} else {
+					return this.selectType === type;
+				}
+			}
 		}
 	};
 </script>

@@ -157,6 +157,8 @@
 					padding: 16px 12px
 					font-size: 0
 					border-1px(rgba(7,17,27,.1))
+					&:last-child
+						border-none()
 					.icon
 						display: inline-block
 						width: 16px

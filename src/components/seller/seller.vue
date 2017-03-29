@@ -75,8 +75,13 @@
 					this.scroll = new BScroll(this.$els.seller, {
 						click: true
 					});
+				} else {
+					this.scroll.refresh();
 				}
 			}
+		},
+		ready() {
+			this._initScroll();
 		}
 	};
 </script>

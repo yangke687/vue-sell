@@ -196,7 +196,7 @@
 							font-size: 24px
 			.favorite
 				position: absolute
-				right: 5px
+				right: 11px
 				top: 18px
 				width: 50px
 				text-align: center
